@@ -10,7 +10,7 @@
     "client:install": "npm install --prefix client",
     "client:build": "npm run build --prefix client",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "cross-env NODE_ENV=production npm install npm && run start"
+    "heroku-postbuild": "npm run start"
   },
   "keywords": [
     "nodejs",
