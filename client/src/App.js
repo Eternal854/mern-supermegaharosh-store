@@ -4,10 +4,11 @@ import { useHttp } from './hooks/http.hook';
 import { AuthContext } from './context/AuthContext';
 import { useRoutes } from './pages/routes';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Loader } from './components';
 
 function App() {
   const { request } = useHttp();
-  const { token, login, logout, userId } = useAuth();
+  const { token, login, logout, userId, ready } = useAuth();
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated);
 
@@ -26,46 +27,48 @@ function App() {
       }
     }
     fetchData();
-  }, []);
+  }, [request]);
 
   React.useEffect(() => {
-    async function fetchCart() {
-      try {
-        const cartRes = await request('api/user/cartItems', 'GET', null, {
-          Authorization: `Bearer ${token}`,
-        });
-        setCart(cartRes[0].cart);
-      } catch (e) {
-        console.error(e, 'Ошибка при запросе корзины');
+    if (isAuthenticated) {
+      async function fetchCart() {
+        try {
+          const cartRes = await request('api/user/cartItems', 'GET', null, {
+            Authorization: `Bearer ${token}`,
+          });
+          setCart(cartRes[0].cart);
+        } catch (e) {
+          console.error(e, 'Ошибка при запросе корзины');
+        }
       }
-    }
 
-    async function fetchFavorites() {
-      try {
-        const favoritesRes = await request('api/user/favoriteItems', 'GET', null, {
-          Authorization: `Bearer ${token}`,
-        });
-        setFavorites(favoritesRes[0].favorites);
-      } catch (e) {
-        console.error(e, 'Ошибка при запросе избранных товаров');
+      async function fetchFavorites() {
+        try {
+          const favoritesRes = await request('api/user/favoriteItems', 'GET', null, {
+            Authorization: `Bearer ${token}`,
+          });
+          setFavorites(favoritesRes[0].favorites);
+        } catch (e) {
+          console.error(e, 'Ошибка при запросе избранных товаров');
+        }
       }
-    }
 
-    async function fetchOrders() {
-      try {
-        const ordersRes = await request('api/user/orders', 'GET', null, {
-          Authorization: `Bearer ${token}`,
-        });
-        setOrders(ordersRes[0].orders);
-      } catch (e) {
-        console.error(e, 'Ошибка при запросе корзины`');
+      async function fetchOrders() {
+        try {
+          const ordersRes = await request('api/user/orders', 'GET', null, {
+            Authorization: `Bearer ${token}`,
+          });
+          setOrders(ordersRes[0].orders);
+        } catch (e) {
+          console.error(e, 'Ошибка при запросе корзины`');
+        }
       }
-    }
 
-    fetchCart();
-    fetchFavorites();
-    fetchOrders();
-  }, [token, request]);
+      fetchCart();
+      fetchFavorites();
+      fetchOrders();
+    }
+  }, [token, request, isAuthenticated]);
 
   const addToCart = async (obj) => {
     try {
@@ -108,6 +111,10 @@ function App() {
   const isAddedToFavorites = (id) => {
     return favorites.some((item) => item._id === id);
   };
+
+  if (!ready) {
+    return <Loader />;
+  }
 
   return (
     <Router>

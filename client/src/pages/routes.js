@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { Home, Cart, Favorites, Orders } from './';
+import { Home, Cart, Favorites, Orders, DetailPage } from './';
 export const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
     return (
@@ -17,6 +17,9 @@ export const useRoutes = (isAuthenticated) => {
         <Route path="/orders" exact>
           <Orders />
         </Route>
+        <Route path="/:id">
+          <DetailPage />
+        </Route>
         <Redirect to="/" />
       </Switch>
     );
@@ -32,6 +35,9 @@ export const useRoutes = (isAuthenticated) => {
       </Route>
       <Route path="/favorites" exact>
         <Favorites />
+      </Route>
+      <Route path="/:id">
+        <DetailPage />
       </Route>
       <Redirect to="/" />
     </Switch>

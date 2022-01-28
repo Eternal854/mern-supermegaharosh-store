@@ -1,10 +1,12 @@
 import React from 'react';
 import { Card, Header } from '../components';
 import { AuthContext } from '../context/AuthContext';
+import { useHttp } from '../hooks/http.hook';
 
 function Home() {
   const { items } = React.useContext(AuthContext);
   const [searchValue, setSearchValue] = React.useState('');
+  const { loading } = useHttp();
 
   const changeSearchHandler = (event) => {
     setSearchValue(event.target.value);
@@ -37,7 +39,7 @@ function Home() {
               <input onChange={changeSearchHandler} value={searchValue} placeholder="Поиск" />
             </div>
           </div>
-          <div className="items-block">{renderItems()}</div>
+          <div className="items-block">{!loading && items && renderItems()}</div>
         </div>
       </div>
     </div>
