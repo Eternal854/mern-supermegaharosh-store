@@ -7,7 +7,6 @@ const User = require('../models/User');
 const auth = require('../middleware/auth.middleware');
 const router = Router();
 
-// /api/user/register
 router.post(
   '/register',
   [
@@ -128,6 +127,7 @@ router.get('/favoriteItems', auth, async (req, res) => {
 
 router.put('/addToFavorites', auth, async (req, res) => {
   try {
+    console.log(req.body);
     const item = await User.updateOne({ _id: req.user.userId }, { $push: { favorites: req.body } });
     res.status(200).json({ message: 'Товар добавлен в избранное' });
   } catch (e) {

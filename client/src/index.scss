@@ -1,7 +1,9 @@
-body {
-  font-family: 'Inter', system-ui;
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
 }
 
 .text_dec_none {
@@ -27,11 +29,12 @@ a {
 
 .wrapper {
   background-color: #fff;
+  min-height: 100vh;
 }
 
 .content_wrapper {
   max-width: 970px;
-  min-height: 740px;
+
   margin: auto;
 }
 
@@ -190,6 +193,7 @@ a {
         margin-bottom: 10px;
 
         .cart_item_image {
+          object-fit: cover;
           width: 100px;
           height: 80px;
           margin: 10px;
@@ -233,6 +237,7 @@ a {
 
         .remove_button {
           position: absolute;
+          cursor: pointer;
           right: 0;
           color: #2d2d2da6;
           margin-top: 10px;
@@ -416,60 +421,6 @@ a {
   }
 }
 
-.cart_add_button_detail {
-  display: inline-block;
-  background-color: #2e8e55;
-  color: #fff;
-  text-transform: uppercase;
-  margin-left: auto;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 5px 10px;
-  width: 230px;
-  height: 40px;
-  text-align: center;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-
-  &:hover {
-    background-color: #257545;
-  }
-
-  &:active {
-    background-color: #1f5f38;
-    transform: translateY(1px);
-  }
-}
-
-.cart_remove_button_detail {
-  display: inline-block;
-  background-color: #df5b5b;
-  color: #fff;
-  text-transform: uppercase;
-  margin-left: auto;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 5px 10px;
-  width: 230px;
-  height: 40px;
-  text-align: center;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-
-  &:hover {
-    background-color: #c04e4e;
-  }
-
-  &:active {
-    background-color: #8a3a3a;
-    transform: translateY(1px);
-  }
-}
-
 .categories-search {
   display: flex;
   align-items: center;
@@ -499,13 +450,12 @@ a {
       border: 0;
       padding: 13px;
       font-size: 16px;
-      width: 250px;
+      width: 200px;
     }
   }
 }
 
 .header {
-  margin-top: 35px;
   background: #2d2d2d;
   height: 93px;
   position: relative;
@@ -586,6 +536,7 @@ a {
 
   .user_dropdown_wrapper {
     position: relative;
+    z-index: 1;
 
     .user_dropdown_top {
       width: 33px;
@@ -676,22 +627,192 @@ a {
   }
 }
 
-.detail_title {
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  margin-bottom: 5px;
-  color: #2d2d2d;
+.text-decoration-none {
+  text-decoration: none;
 }
 
-.detail_price {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #2d2d2d;
+.categories {
+  max-width: 700px;
+
+  ul {
+    display: flex;
+    padding-left: 20px;
+
+    li {
+      background-color: #f9f9f9;
+      padding: 13px 20px;
+      border-radius: 30px;
+      margin-right: 10px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.1s ease-in-out;
+      list-style-type: none;
+
+      &:hover {
+        background-color: darken(#f9f9f9, 2%);
+      }
+
+      &:active {
+        background-color: darken(#f9f9f9, 5%);
+      }
+
+      &.active {
+        background-color: #2d2d2d;
+        color: #fff;
+      }
+    }
+  }
 }
 
-.detail_img {
-  width: 200px;
-  height: 200px;
+.item_content {
+  margin: 40px 60px 0 60px;
+  display: flex;
+
+  .detail_img {
+    object-fit: cover;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+  }
+
+  .currentImg {
+    width: 400px;
+    height: 500px;
+    margin-left: 30px;
+  }
+
+  .item_details {
+    position: relative;
+    margin-left: 30px;
+
+    .detail_title {
+      font-size: 18px;
+      font-weight: normal;
+      letter-spacing: 1px;
+      margin: 20px 0 15px 0;
+      color: #2d2d2d;
+    }
+
+    .detail_price {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #6e6e6e;
+      margin-bottom: 15px;
+    }
+
+    > p {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 900;
+      color: #6e6e6e;
+      margin-bottom: 5px;
+    }
+
+    .detail_description {
+      margin-bottom: 15px;
+    }
+
+    .buttons {
+      max-width: 100%;
+      position: absolute;
+      bottom: 0;
+      align-items: center;
+      padding: 0 4px;
+
+      .detail_sizes {
+        display: flex;
+        background-color: #f3f3f3;
+        flex-direction: column;
+        padding: 4px;
+        margin-bottom: 20px;
+
+        ul {
+          display: flex;
+          flex: 1;
+
+          li {
+            text-align: center;
+            list-style-type: none;
+            padding: 8px;
+            flex: 1;
+            cursor: pointer;
+            font-weight: normal;
+            font-size: 14px;
+
+            &.active {
+              background: #ffffff;
+              font-weight: 600;
+
+              cursor: auto;
+            }
+          }
+        }
+      }
+
+      .add_buttons {
+        display: flex;
+
+        .cart_add_button_detail {
+          display: inline-block;
+          background-color: #2e8e55;
+          color: #fff;
+          text-transform: uppercase;
+          margin-right: 10px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 2px;
+          padding: 5px 10px;
+          width: 230px;
+          height: 40px;
+          text-align: center;
+          cursor: pointer;
+          border: 1px solid transparent;
+          transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+
+          &:hover {
+            background-color: #257545;
+          }
+
+          &:active {
+            background-color: #1f5f38;
+            transform: translateY(1px);
+          }
+        }
+
+        .cart_remove_button_detail {
+          display: inline-block;
+          background-color: #df5b5b;
+          color: #fff;
+          text-transform: uppercase;
+          margin-right: 10px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 2px;
+          padding: 5px 10px;
+          width: 230px;
+          height: 40px;
+          text-align: center;
+          cursor: pointer;
+          border: 1px solid transparent;
+          transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+
+          &:hover {
+            background-color: #c04e4e;
+          }
+
+          &:active {
+            background-color: #8a3a3a;
+            transform: translateY(1px);
+          }
+        }
+
+        .favorite_heart {
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }

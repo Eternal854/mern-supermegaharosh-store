@@ -1,12 +1,15 @@
-import React from 'react';
-import { Card, Header } from '../components';
+import React, { useState, useContext } from 'react';
+import { Card, Header, Categories } from '../components';
 import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
 
+const categoryNames = ['Кроссовки', 'Ботинки', 'Туфли'];
+
 function Home() {
-  const { items } = React.useContext(AuthContext);
-  const [searchValue, setSearchValue] = React.useState('');
+  const { items } = useContext(AuthContext);
+  const [searchValue, setSearchValue] = useState('');
   const { loading } = useHttp();
+  const [category, setCategory] = useState(null);
 
   const changeSearchHandler = (event) => {
     setSearchValue(event.target.value);
@@ -16,7 +19,17 @@ function Home() {
     const filteredItems = items.filter((item) =>
       item.title.toLowerCase().includes(searchValue.toLowerCase()),
     );
-    return filteredItems.map((item, index) => <Card key={index} {...item} />);
+    return filteredItems.map((item, index) =>
+      category === null ? (
+        <Card key={index} {...item} />
+      ) : (
+        item.category === category && <Card key={index} {...item} />
+      ),
+    );
+  };
+
+  const onSelectCategory = (index) => {
+    setCategory(index);
   };
 
   return (
@@ -25,7 +38,11 @@ function Home() {
       <div className="content_wrapper">
         <div className="content">
           <div className="categories-search">
-            <h2 className="label_text">товары</h2>
+            <Categories
+              activeCategory={category}
+              onClickCategory={onSelectCategory}
+              items={categoryNames}
+            />
             <div className="search-block clear">
               <img src="img/search-icon.svg" alt="Search" />
               {searchValue && (

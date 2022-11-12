@@ -15,7 +15,7 @@ function CartItem({ _id, title, price, imageUrl }) {
 
   return (
     <div className="cart_item">
-      <img className="cart_item_image" src={imageUrl} alt="CartItem" />
+      <img className="cart_item_image" src={imageUrl[0]} alt="CartItem" />
       <div className="title_button_block">
         <div className="price_text">{price} $</div>
         <div className="cart_item_title">{title}</div>

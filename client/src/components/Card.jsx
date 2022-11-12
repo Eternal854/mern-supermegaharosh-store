@@ -6,6 +6,7 @@ function Card({ _id, title, price, imageUrl }) {
   const { addToCart, addToFavorites, isAddedToCart, isAddedToFavorites } =
     React.useContext(AuthContext);
   const obj = { _id, title, price, imageUrl };
+  console.log(obj);
 
   const addToCartHandler = () => {
     addToCart(obj);
@@ -16,9 +17,9 @@ function Card({ _id, title, price, imageUrl }) {
   };
 
   return (
-    <Link to={`/${_id}`}>
+    <Link className="text-decoration-none" to={`/${_id}`}>
       <div className="card">
-        <img className="card_image" src={imageUrl} alt="Card" />
+        <img className="card_image" src={imageUrl[0]} alt="Card" />
         <div className="card_title">{title}</div>
         <div className="favorite_heart">
           <img

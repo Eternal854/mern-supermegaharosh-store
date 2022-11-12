@@ -8,12 +8,14 @@ const router = Router();
 
 router.post('/add', async (req, res) => {
   try {
-    const { title, price, imageUrl } = req.body;
+    const { title, description, price, imageUrl, category } = req.body;
 
     const cartItem = new Item({
       title,
+      description,
       price,
       imageUrl,
+      category,
     });
 
     await cartItem.save();
