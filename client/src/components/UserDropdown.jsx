@@ -15,6 +15,8 @@ function UserDropdown() {
     password: '',
   });
 
+  const [authMode, setAuthMode] = useState(false);
+
   useEffect(() => {
     message(error);
     clearError();
@@ -47,81 +49,86 @@ function UserDropdown() {
   };
 
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
-  const userDropdownRef = useRef();
+  const userDropdownRef = useRef(null);
 
   const mouseOutsideHandle = (event) => {
     const path = event.composedPath && event.composedPath();
-    path.includes(userDropdownRef.current) ? setDropdownIsOpen(true) : setDropdownIsOpen(false);
+    if (userDropdownRef.current && !path.includes(userDropdownRef.current)) {
+      setDropdownIsOpen(false);
+    }
+  };
+
+  const dropdownToggle = () => {
+    setDropdownIsOpen(!dropdownIsOpen);
+  };
+
+  const authModeToggle = () => {
+    setAuthMode(!authMode);
   };
 
   React.useEffect(() => {
-    document.body.addEventListener('mouseover', mouseOutsideHandle);
+    document.body.addEventListener('mousedown', mouseOutsideHandle);
   }, []);
 
   return (
     <div ref={userDropdownRef} className="user">
-      <img className="cart-icon" src="/img/user-icon.svg" alt="User" />
+      <img onClick={dropdownToggle} className="cart-icon" src="/img/user-icon.svg" alt="User" />
       <CSSTransition
         in={dropdownIsOpen}
-        timeout={2000}
+        timeout={300}
         classNames="user_dropdown_wrapper"
-        mountOnEnter
         unmountOnExit
         onEnter={() => setDropdownIsOpen(true)}
         onExited={() => setDropdownIsOpen(false)}>
         <div className="user_dropdown_wrapper">
-          <div className="user_dropdown_top" />
           <div className="user_dropdown_content">
             {isAuthenticated ? (
               <>
-                <div className="buttonfield_auth">
-                  <Link to="/orders">
-                    <button disabled={loading} className="button">
-                      мои покупки
-                    </button>
-                  </Link>
-                </div>
-                <div className="buttonfield_auth">
-                  <button onClick={logoutHandle} disabled={loading} className="button">
-                    выход
+                <Link to="/orders">
+                  <button disabled={loading} className="menu_button">
+                    Мои покупки
                   </button>
-                </div>
+                </Link>
+
+                <button onClick={logoutHandle} disabled={loading} className="menu_button">
+                  Выход
+                </button>
               </>
             ) : (
               <>
-                <div className="field_auth">
-                  <label className="input_label">email</label>
-                  <div className="input_wrapper">
+                <h3>{authMode ? 'Регистрация' : 'Вход'}</h3>
+                <div className="input_block">
+                  <div className="input_group">
                     <input
                       onChange={changeHandle}
+                      placeholder="Email"
                       id="email"
                       name="email"
-                      type="text"
+                      type="email"
                       value={form.email}
-                      className="email_textbox"></input>
+                    />
                   </div>
-                </div>
-                <div className="field_auth">
-                  <label className="input_label">пароль</label>
-                  <div className="input_wrapper">
+                  <div className="input_group">
                     <input
                       onChange={changeHandle}
+                      placeholder="Пароль"
                       id="password"
                       name="password"
                       type="password"
                       value={form.password}
-                      className="email_textbox"></input>
+                    />
                   </div>
                 </div>
                 <div className="buttonfield_auth">
-                  <button onClick={loginHandle} disabled={loading} className="button">
-                    вход
+                  <button
+                    disabled={loading}
+                    onClick={!authMode ? loginHandle : registerHandle}
+                    className="button">
+                    {!authMode ? 'Войти' : 'Зарегистрироваться'}
                   </button>
                 </div>
-                <div className="buttonfield_auth">
-                  <button onClick={registerHandle} disabled={loading} className="button">
-                    регистрация
-                  </button>
+                <div className="auth_toggler">
+                  <span onClick={authModeToggle}>{authMode ? 'Вход' : 'Регистрация'}</span>
                 </div>
               </>
             )}

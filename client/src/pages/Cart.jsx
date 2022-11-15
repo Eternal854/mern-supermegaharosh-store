@@ -48,8 +48,9 @@ function Cart() {
       {cart.length !== 0 ? (
         <div className="cart_block">
           <div className="cart_wrapper">
-            <div className="categories-search">
-              <h2 className="label_text">Корзина</h2>
+            <div className="cart_header">
+              <h2>Корзина</h2>
+              <span>Очистить корзину</span>
             </div>
             <div className="cart-content">{renderItems()}</div>
           </div>
