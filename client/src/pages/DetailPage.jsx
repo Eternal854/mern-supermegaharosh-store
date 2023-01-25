@@ -4,7 +4,7 @@ import { Header, Loader } from '../components';
 import { useHttp } from '../hooks/http.hook';
 import { AuthContext } from '../context/AuthContext';
 
-const sizes = [39, 40, 41, 42, 43, 44, 45, 46];
+const sizes = [39, 40, 41, 42, 43, 44, 45];
 
 function DetailPage() {
   const { addToCart, addToFavorites, isAddedToCart, isAddedToFavorites } =

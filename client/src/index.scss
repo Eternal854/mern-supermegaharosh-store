@@ -784,30 +784,31 @@ a {
 
       .detail_sizes {
         display: flex;
-        background-color: #f3f3f3;
         flex-direction: column;
-        padding: 4px;
         margin-bottom: 20px;
 
         ul {
           display: flex;
-          flex: 1;
 
           li {
             text-align: center;
             list-style-type: none;
+            width: 50px;
             padding: 8px;
+            margin-right: 7px;
+            box-shadow: rgb(229 229 229) 0px 0px 0px 1px;
+            border-radius: 4px;
             flex: 1;
             cursor: pointer;
-            font-weight: normal;
             font-size: 14px;
 
             &.active {
-              background: #ffffff;
-              font-weight: 600;
-
-              cursor: auto;
+              box-shadow: rgb(17 17 17) 0px 0px 0px 1px inset;
             }
+          }
+
+          li:hover {
+            box-shadow: rgb(17 17 17) 0px 0px 0px 1px inset;
           }
         }
       }
